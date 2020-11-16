@@ -2,37 +2,68 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #008B8B;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1 {
+  color: aqua;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.mp3, .mp4 {
+  position: relative;
+  background: none;
+  width: 100px;
+  height: 40px;
+  color: aqua;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 0.2em solid aqua;
+  padding: 0.5em 1em;
+}
+
+.mp3:hover, .mp4:hover, .input-url button:hover {
+  background-color: aqua;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.clicked-mp3, .clicked-mp4 {
+  position: relative;
+  background-color: aqua;
+  width: 100px;
+  height: 40px;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 0.2em solid aqua;
+  padding: 0.5em 1em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-url {
+  padding-top: 20px;
+}
+
+.input-url input {
+  border: 0.2em solid aqua;
+  border-radius: 5px;
+  width: 35%;
+  height: 30px;
+  background-color: #008B8B;
+}
+
+.convert-button {
+  padding-top: 20px;
+}
+
+.input-url button {
+  display: block;
+  background: none;
+  width: 100px;
+  height: 40px;
+  color: aqua;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 0.2em solid aqua;
+  padding: 0.5em 1em;
+  margin: auto;
 }
