@@ -52,6 +52,10 @@ h1 {
   background-color: #008B8B;
 }
 
+.input-url input::placeholder {
+  color: aqua;
+}
+
 .convert-button {
   padding-top: 20px;
 }

@@ -126,7 +126,7 @@ function App() {
             <h3>{downloadInfo["Title"]}</h3>
             <img alt="video_thumbnail" src={downloadInfo["Video_Thumbnail"]} />
             <div className="download-button">
-            <a href={downloadInfo["Download_url"]} >Download</a>
+            <a href={downloadInfo["Download_url"]}>Download</a>
             </div>
           </div>
         ) : ""}
@@ -136,7 +136,7 @@ function App() {
             <h3>{downloadMp4['name']}</h3>
             <img alt="video_thumbnail" src={downloadMp4["thumbnail"]} />
             <div className="download-button">
-            <a href={downloadMp4['cdns'][0]['url']} >Download</a>
+            <a href={downloadMp4['cdns'][0]['url']}>Download</a>
             </div>
           </div>
         ) : ""}
