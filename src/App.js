@@ -8,6 +8,7 @@ function App() {
   const [url, setURL] = useState("");
   const [formatError, setFormatError] = useState(false);
   const [urlError, setUrlError] = useState(false);
+  const [downloadInfo, setDownloadInfo] = useState(false);
 
   const handleClick = (e) => {
     if (e.target.value === "mp3") {
@@ -32,7 +33,16 @@ function App() {
   }
 
   const convertMp3 = () => {
-    console.log("mp3")
+    fetch(`https://youtube-to-mp32.p.rapidapi.com/yt_to_mp3?video_id=${url}`, {
+      "method": "GET",
+    	"headers": {
+        "Access-Control-Allow-Origin": "http://localhost:3000",
+    		"x-rapidapi-key": "7aef27f912mshc92e987f52a69f2p12ecb6jsn611abd566136",
+    		"x-rapidapi-host": "youtube-to-mp32.p.rapidapi.com",
+    	}
+    })
+    .then(res => res.json())
+    .then(res => setDownloadInfo(res))
   }
 
   const convertMp4 = () => {
@@ -40,7 +50,8 @@ function App() {
   }
 
   const handleURL = (e) => {
-    setURL(e.target.value);
+    let videoId = e.target.value.split("=")[1];
+    setURL(videoId);
   }
 
   return (
@@ -78,6 +89,16 @@ function App() {
         {urlError === true ? (
           <p>Please paste a YouTube url.</p>
         ) : "" }
+
+        {downloadInfo !== false ? (
+          <div className="response">
+            <h3>{downloadInfo["Title"]}</h3>
+            <img alt="video_thumbnail" src={downloadInfo["Video_Thumbnail"]} />
+            <div className="download-button">
+            <a href={downloadInfo["Download_url"]} >Download</a>
+            </div>
+          </div>
+        ) : ""}
 
     </div>
   );
