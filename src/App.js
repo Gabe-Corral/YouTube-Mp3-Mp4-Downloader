@@ -9,6 +9,7 @@ function App() {
   const [formatError, setFormatError] = useState(false);
   const [urlError, setUrlError] = useState(false);
   const [downloadInfo, setDownloadInfo] = useState(false);
+  const [downloadMp4, setDownloadMp4] = useState(false);
 
   const handleClick = (e) => {
     if (e.target.value === "mp3") {
@@ -45,8 +46,38 @@ function App() {
     .then(res => setDownloadInfo(res))
   }
 
+  //for some reason fetch isn't working for the mp4 api
   const convertMp4 = () => {
-    console.log("mp4")
+    const qs = require("querystring");
+    const http = require("https");
+    const options = {
+    	"method": "POST",
+    	"hostname": "youtube-video-grabber.p.rapidapi.com",
+    	"port": null,
+    	"path": "/ytGrab_v1",
+    	"headers": {
+    		"content-type": "application/x-www-form-urlencoded",
+    		"x-rapidapi-key": "7aef27f912mshc92e987f52a69f2p12ecb6jsn611abd566136",
+    		"x-rapidapi-host": "youtube-video-grabber.p.rapidapi.com",
+    		"useQueryString": true
+    	}
+    };
+
+    const req = http.request(options, function (res) {
+    	const chunks = [];
+
+    	res.on("data", function (chunk) {
+    		chunks.push(chunk);
+    	});
+
+    	res.on("end", function () {
+    		const body = Buffer.concat(chunks);
+    		setDownloadMp4(JSON.parse(body));
+    	});
+    });
+
+    req.write(qs.stringify({url_: `https://www.youtube.com/watch?v=${url}`}));
+    req.end();
   }
 
   const handleURL = (e) => {
@@ -96,6 +127,16 @@ function App() {
             <img alt="video_thumbnail" src={downloadInfo["Video_Thumbnail"]} />
             <div className="download-button">
             <a href={downloadInfo["Download_url"]} >Download</a>
+            </div>
+          </div>
+        ) : ""}
+
+        {downloadMp4 !== false ? (
+          <div className="response">
+            <h3>{downloadMp4['name']}</h3>
+            <img alt="video_thumbnail" src={downloadMp4["thumbnail"]} />
+            <div className="download-button">
+            <a href={downloadMp4['cdns'][0]['url']} >Download</a>
             </div>
           </div>
         ) : ""}
