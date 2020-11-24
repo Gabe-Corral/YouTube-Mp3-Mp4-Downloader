@@ -37,8 +37,7 @@ function App() {
     fetch(`https://youtube-to-mp32.p.rapidapi.com/yt_to_mp3?video_id=${url}`, {
       "method": "GET",
     	"headers": {
-        "Access-Control-Allow-Origin": "http://localhost:3000",
-    		"x-rapidapi-key": "7aef27f912mshc92e987f52a69f2p12ecb6jsn611abd566136",
+    		"x-rapidapi-key": "API-Key",
     		"x-rapidapi-host": "youtube-to-mp32.p.rapidapi.com",
     	}
     })
@@ -46,38 +45,20 @@ function App() {
     .then(res => setDownloadInfo(res))
   }
 
-  //for some reason fetch isn't working for the mp4 api
   const convertMp4 = () => {
-    const qs = require("querystring");
-    const http = require("https");
-    const options = {
+    fetch("https://youtube-video-grabber.p.rapidapi.com/ytGrab_v1", {
     	"method": "POST",
-    	"hostname": "youtube-video-grabber.p.rapidapi.com",
-    	"port": null,
-    	"path": "/ytGrab_v1",
     	"headers": {
     		"content-type": "application/x-www-form-urlencoded",
-    		"x-rapidapi-key": "7aef27f912mshc92e987f52a69f2p12ecb6jsn611abd566136",
-    		"x-rapidapi-host": "youtube-video-grabber.p.rapidapi.com",
-    		"useQueryString": true
+    		"x-rapidapi-key": "API-Key",
+    		"x-rapidapi-host": "youtube-video-grabber.p.rapidapi.com"
+    	},
+    	"body": {
+    		"url_": `https://www.youtube.com/watch?v=${url}`
     	}
-    };
-
-    const req = http.request(options, function (res) {
-    	const chunks = [];
-
-    	res.on("data", function (chunk) {
-    		chunks.push(chunk);
-    	});
-
-    	res.on("end", function () {
-    		const body = Buffer.concat(chunks);
-    		setDownloadMp4(JSON.parse(body));
-    	});
-    });
-
-    req.write(qs.stringify({url_: `https://www.youtube.com/watch?v=${url}`}));
-    req.end();
+    })
+    .then(res => res.json())
+    .then(res => setDownloadMp4(res))
   }
 
   const handleURL = (e) => {
